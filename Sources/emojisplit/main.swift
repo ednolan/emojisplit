@@ -11,7 +11,8 @@ let infileArgParse : PositionalArgument<String> = parser.add(positional: "INFILE
 
 let parsedArguments = try parser.parse(arguments)
 let emojiArgument = parsedArguments.get(emojiArgParse)
-let emoji : Character = emojiArgument![emojiArgument!.startIndex]
+let selectedEmoji : Character = emojiArgument![emojiArgument!.startIndex]
+let wildcardEmoji : Character = "*️⃣"
 let infile = parsedArguments.get(infileArgParse)
 
 enum FSMState {
@@ -29,7 +30,7 @@ do {
     for char in infileText {
         if (state == FSMState.copyToOutput) {
             if emojiIndex.contains(char) {
-                if char == emoji {
+                if char == wildcardEmoji || char == selectedEmoji {
                     state = FSMState.readEmojiSequenceContainingSelected;
                 } else {
                     state = FSMState.readEmojiSequence;
@@ -39,7 +40,7 @@ do {
             }
         } else if (state == FSMState.readEmojiSequence) {
             if emojiIndex.contains(char) {
-                if char == emoji {
+                if char == wildcardEmoji || char == selectedEmoji {
                     state = FSMState.readEmojiSequenceContainingSelected;
                 }
             }
@@ -48,7 +49,7 @@ do {
             }
         } else if (state == FSMState.omitFromOutput) {
             if emojiIndex.contains(char) {
-                if char == emoji {
+                if char == wildcardEmoji || char == selectedEmoji {
                     state = FSMState.readEmojiSequenceContainingSelected;
                 } else {
                     state = FSMState.readEmojiSequence;
