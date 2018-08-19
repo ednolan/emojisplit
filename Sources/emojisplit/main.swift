@@ -27,7 +27,6 @@ do {
     var outbuf = ""
     var state = FSMState.copyToOutput
     for char in infileText {
-        print("\(char), \(state)");
         if (state == FSMState.copyToOutput) {
             if emojiIndex.contains(char) {
                 if char == emoji {
