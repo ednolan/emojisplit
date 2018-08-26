@@ -1,19 +1,6 @@
 import Foundation
 import Commander
 
-struct EmojiOpts {
-    enum OutputMode {
-        case selectedEmoji(Character)
-        case everyEmoji
-    }
-    var mode : OutputMode
-    var infile : URL
-    init (mode:OutputMode, infile:URL) {
-        self.mode = mode
-        self.infile = infile
-    }
-}
-
 enum SplitFileMode {
     case removeExtension
     case emojiExtension
@@ -92,13 +79,20 @@ let main = command(
     //let parser = ArgumentParser(usage: "INFILE -e 🙂",
     //                            overview: "Split up a template config file based on sections delinated by emojis")
 
-    func getEmojiOpts(_ emoji: String, _ split: Bool, _ infile: String) -> EmojiOpts {
-        let mode = split ? EmojiOpts.OutputMode.everyEmoji
-                         : EmojiOpts.OutputMode.selectedEmoji(emoji[emoji.startIndex])
-        let infile = URL(fileURLWithPath:infile)
-        return EmojiOpts(mode: mode, infile: infile)
+    struct EmojiOpts {
+        enum OutputMode {
+            case selectedEmoji(Character)
+            case everyEmoji
+        }
+        var mode : OutputMode
+        var infile : URL
+        init (_ emoji: String, _ split: Bool, _ infile: String) {
+            self.mode = split ? EmojiOpts.OutputMode.everyEmoji
+                              : EmojiOpts.OutputMode.selectedEmoji(emoji[emoji.startIndex])
+            self.infile = URL(fileURLWithPath:infile)
+        }
     }
-    let opts = getEmojiOpts(emoji, split, infile)
+    let opts = EmojiOpts(emoji, split, infile)
 
     var emojiIndexPath = URL(fileURLWithPath: NSString(string: "~").expandingTildeInPath)
     emojiIndexPath.appendPathComponent("/.config/emojisplit/emoji.index")
