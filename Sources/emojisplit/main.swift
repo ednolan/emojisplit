@@ -30,14 +30,14 @@ func splitFile(_ infile: URL, _ selectedEmoji: Character, _ index: [Character], 
 
     print("Processing: ", infile, " -> ", outfilePath)
 
+    let wildcardEmoji : Character = "*️⃣"
+
     enum FSMState {
         case copyToOutput;
         case readEmojiSequence;
         case omitFromOutput;
         case readEmojiSequenceContainingSelected;
     }
-
-    let wildcardEmoji : Character = "*⃣"
 
     do {
         let infileText = try String(contentsOf: infile, encoding: String.Encoding.utf8)
@@ -85,7 +85,7 @@ func splitFile(_ infile: URL, _ selectedEmoji: Character, _ index: [Character], 
 }
 
 let main = command(
-  Option("emoji", default: "*⃣"),
+  Option("emoji", default: "*️⃣"),
   Flag("split", description:"Produce an outfile for every emoji in index"),
   Argument<String>("INFILE", description:"File template to process")
 ) { emoji, split, infile in
