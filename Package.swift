@@ -6,11 +6,12 @@ import PackageDescription
 let package = Package(
     name: "emojisplit",
     dependencies: [
-        .package(url: "https://github.com/apple/swift-package-manager.git", from: "0.1.0"),
+      .package(url: "https://github.com/apple/swift-package-manager.git", from: "0.1.0"),
+      .package(url: "https://github.com/kylef/Commander.git", from: "0.1.0"),
     ],
     targets: [
         .target(
             name: "emojisplit",
-            dependencies: ["Utility"]),
+            dependencies: ["Commander"]),
     ]
 )
