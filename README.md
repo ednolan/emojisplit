@@ -1,3 +1,3 @@
 # emojisplit
 
-A description of this package.
+swift build
