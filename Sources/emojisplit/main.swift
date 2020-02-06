@@ -15,8 +15,6 @@ func splitFile(_ infile: URL, _ selectedEmoji: Character, _ index: [Character], 
         }
     }()
 
-    print("Processing: ", infile, " -> ", outfilePath)
-
     let wildcardEmoji : Character = "✴️"
 
     enum FSMState {
@@ -65,7 +63,10 @@ func splitFile(_ infile: URL, _ selectedEmoji: Character, _ index: [Character], 
                 }
             }
         }
-        try outbuf.write(to: outfilePath, atomically: false, encoding: String.Encoding.utf8)
+        if (!outbuf.isEmpty) {
+            print("Processed: ", infile, " -> ", outfilePath)
+            try outbuf.write(to: outfilePath, atomically: false, encoding: String.Encoding.utf8)
+        }
     } catch {
         print(error)
     }
