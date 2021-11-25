@@ -95,6 +95,8 @@ let main = command(
     }
     let opts = EmojiOpts(emoji, split, infile)
 
+    print("Processing: ", opts.infile)
+
     var emojiIndexPath = URL(fileURLWithPath: NSString(string: "~").expandingTildeInPath)
     emojiIndexPath.appendPathComponent("/.config/emojisplit/emoji.index")
     let emojiIndex : [Character] = try String(contentsOf: emojiIndexPath, encoding: String.Encoding.utf8).split(separator: "\n").map { $0[$0.startIndex] }
