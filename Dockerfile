@@ -13,4 +13,4 @@ RUN swift build -c release
 FROM swift:slim
 WORKDIR /root
 COPY --from=builder /emojisplit .
-CMD [".build/release/emojisplit"]
+ENTRYPOINT [".build/release/emojisplit"]
