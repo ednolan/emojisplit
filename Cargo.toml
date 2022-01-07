@@ -1,0 +1,14 @@
+[package]
+name = "emojisplit"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "emojisplit"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1"
+dirs = "1"
+structopt = "0.3"
+unicode-segmentation = "1"
